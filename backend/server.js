@@ -1,13 +1,23 @@
-import express from "express"
+import express from "express";
+import cors from "cors";
+import noteRoutes from "./routes/noteRoutes.js";
 
+const app = express();
+const PORT = 6501;
 
-const app = express ();
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-app.get("/api/notes", (req, res) => {
-    res.send("You got 5 notes");
+// Routes
+app.use("/api/notes", noteRoutes);
+
+// Root route
+app.get("/", (req, res) => {
+  res.send("Notes API is running on port 6501");
 });
 
-
-app.listen(5001, () => {
-    console.log("Server started on PORT : 5001");
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
