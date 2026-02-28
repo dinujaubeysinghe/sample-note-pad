@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/api/notes", noteRoutes);
 
 // Root route
-app.get("/", (req, res) => {
+app.get("/api/notes", (req, res) => {
   res.send("Notes API is running on port 6501");
 });
 
