@@ -3,19 +3,19 @@ import * as noteController from "../controllers/noteController.js";
 
 const router = express.Router();
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.send("Notes API is running on port 6501");
 });
 
-app.post("/", (req, res) => {
+router.post("/", (req, res) => {
   res.status(201).send("Notes created successfully");
 });
 
-app.put("/", (req, res) => {
+router.put("/", (req, res) => {
   res.status(200).send("Notes updated successfully");
 });
 
-app.delete("/", (req, res) => {
+router.delete("/:id", (req, res) => {
   res.status(200).send("Notes deleted successfully");
 });
 
