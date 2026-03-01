@@ -1,60 +1,35 @@
-import * as notesStore from "../data/notesStore.js";
+import Note from "../models/note.js";
 
-export function getAllNotes(req, res) {
-  try {
-    const notes = notesStore.getAllNotes();
-    res.json(notes);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch notes" });
-  }
-}
+export async function getAllNotes(req, res) {
 
-export function getNoteById(req, res) {
-  try {
-    const { id } = req.params;
-    const note = notesStore.getNoteById(id);
-    if (!note) {
-      return res.status(404).json({ error: "Note not found" });
-    }
-    res.json(note);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch note" });
-  }
-}
+  try{
+    const notes = await Note.find();
+    res.status(200).json(notes);
 
-export function createNote(req, res) {
-  try {
-    const { title, content } = req.body;
-    const note = notesStore.createNote(title, content);
-    res.status(201).json(note);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to create note" });
+  }catch(error){
+      console.error("Error in get all notes",error);
+      res.status(500).json({message: "Internal server error"})
   }
-}
+}; 
 
-export function updateNote(req, res) {
-  try {
-    const { id } = req.params;
-    const { title, content } = req.body;
-    const note = notesStore.updateNote(id, title, content);
-    if (!note) {
-      return res.status(404).json({ error: "Note not found" });
-    }
-    res.json(note);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to update note" });
-  }
-}
+export async function createNotes(req, res) {
+  
+  try{
+    const{ title , content} = res.body;
+    const newNote = new Note({ title , content})
 
-export function deleteNote(req, res) {
-  try {
-    const { id } = req.params;
-    const deleted = notesStore.deleteNote(id);
-    if (!deleted) {
-      return res.status(404).json({ error: "Note not found" });
-    }
-    res.status(204).send();
-  } catch (err) {
-    res.status(500).json({ error: "Failed to delete note" });
+    await newNote.save();
+    res.status(201).json({message: "Note created sussecfully"})
+  }catch(error){
+    console.error("Error in create note",error)
+    res.status(500).json({message:"Ayyayyoo"})
   }
-}
+}; 
+
+export async function updateNotes (req, res) {
+  res.status(200).json({message: "Note updated successfully !!"});
+}; 
+
+export async function deleteNotes (req, res)  {
+  res.status(200).json({message: "Note deleted successfully !!"});
+}; 
