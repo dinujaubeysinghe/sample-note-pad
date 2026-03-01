@@ -6,12 +6,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-console.log(process.env.MONGO_URI);
-
 const app = express();
 const PORT = 6501;
 
-connectDB();
+
 
 // Middleware
 app.use(cors());
@@ -22,7 +20,10 @@ app.use("/api/notes", noteRoutes);
 
 
 // Start server
-app.listen(PORT, () => {
+connectDB().then(() => {
+  app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
+  });
 });
+
 
