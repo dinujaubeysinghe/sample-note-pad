@@ -553,5 +553,5 @@ const shopItems = [
     </div>
   )
 }
-
+//This is for testing purposes only, the home page is not yet fully implemented and may contain placeholder content. The final design and features may differ from what is currently shown here.
 export default HomePage;
